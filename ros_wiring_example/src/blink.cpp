@@ -20,11 +20,11 @@
 const int pwmrf = 19, pwmlf = 18, rr= 16, lr=17;	
 
 
-//polling vars
+//polling variables
 unsigned char obs1=0, obs2=0, obs3=0, obs4=0, obs5=0;
 unsigned char echo = 0;
 //polling pins
-int uso [6] = {0,23, 21,25,27,4};			//something's off with the pins for the first sensor... there's no response after the poll called ROS_INFO is exe'd
+int uso [6] = {0,23, 21,25,27,4};			
 int usi [6] = {0,22, 20,24, 26,5};
 
 void pwm (short speed_index1, short speed_index2);
@@ -32,10 +32,10 @@ void poll(unsigned char i);
 void Move(void);
 
 
-const short alignindexsmall = -1000, alignindexlarge = 1000,aligndelay =200;				//make it so that the goal doesn't go from too right to too left, i.e,
-																					//thresholds should be so that a reasonable delay doesn't make a close
+const short alignindexsmall = -1000, alignindexlarge = 1000,aligndelay =200;				
+													
 	
-																				//goal go out of bounds			//includes and #defines
+													
 const short rightturnlarge = 1000,rightturnsmall = -1000;
 float width_of_object =0;
 
@@ -100,20 +100,6 @@ void centroid_callback(const std_msgs::Float32MultiArray::ConstPtr &  msg)
 	ROS_INFO("CENTROID: %d", centroid);
 	if(width_of_object >= 270) {pwm(0,0); return;}
 		
-	//if(avoiding_obstacle == 1){
-		//ROS_INFO("Poling the sensrs while avoiding obstacles");
-		//obs =0;									// go in with an open mind
-		//for(count = 1; count<=5; count++)		//check for obstacles
-		//{
-			//poll(count);
-		//}
-		//ROS_INFO("Polling Output: %s", obs?"obs detected":"Path is clear");
-		//Move();
-		//}
-
-
-	//else{
-	//align():
 	if ((centroid<=thresh2)&&(centroid>=thresh1)){
 		//centroid in the picture, we can move forward
 		ROS_INFO("Ready to move frwrd, Poling the sensrs");
@@ -146,7 +132,6 @@ void centroid_callback(const std_msgs::Float32MultiArray::ConstPtr &  msg)
 		
 	
 	}
-	//}
 	else{
 		
 		//ROS_INFO("Object not detected, Poling the sensrs");
@@ -329,7 +314,7 @@ void Move(void)
 			avoiding_obstacle = 0;}
 		if(obs1 || obs2)
 		{		state = correctionalfwd;	
-		//sass = 1; //potential for left turn 
+		
 		}
 		break;
 		
